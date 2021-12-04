@@ -26,10 +26,8 @@ export default function SignIn() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user: {
-          email: user.email,
-          password: user.password,
-        },
+        email: user.email,
+        password: user.password,
       }),
     })
       .then((response) => response.json())
@@ -52,7 +50,7 @@ export default function SignIn() {
       <Card sx={{ maxWidth: 345 }} variant="outlined">
         <CardHeader sx={{ textAlign: "center" }} title="Sign In Form" />
         <CardContent>
-          <form onSubmit={handleSubmit} id="signin-form">
+          <form onSubmit={handleSubmit}>
             <TextField
               sx={{ mb: 3, width: "315px" }}
               required
@@ -72,13 +70,7 @@ export default function SignIn() {
               onChange={(event) => setPassword(event.target.value)}
             />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                sx={{ mb: 5 }}
-                variant="contained"
-                type="submit"
-                form="signin-form"
-                value="continue"
-              >
+              <Button sx={{ mb: 5 }} variant="contained" type="submit">
                 Sign In
               </Button>
             </Box>

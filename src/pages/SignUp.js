@@ -54,7 +54,7 @@ export default function SignUp() {
       <Card sx={{ maxWidth: 345 }} variant="outlined">
         <CardHeader sx={{ textAlign: "center" }} title="Sign Up Form" />
         <CardContent>
-          <form onSubmit={handleSubmit} id="signup-form">
+          <form onSubmit={handleSubmit}>
             <TextField
               sx={{ mb: 3, width: "315px" }}
               required
@@ -83,13 +83,7 @@ export default function SignUp() {
               onChange={(event) => setPhone(event.target.value)}
             />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                sx={{ mb: 5 }}
-                variant="contained"
-                type="submit"
-                form="signin-form"
-                value="continue"
-              >
+              <Button sx={{ mb: 5 }} variant="contained" type="submit">
                 Sign Up
               </Button>
             </Box>
