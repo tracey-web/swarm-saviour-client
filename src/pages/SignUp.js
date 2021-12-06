@@ -65,8 +65,9 @@ export default function SignUp() {
               onChange={(event) => setEmail(event.target.value)}
             />
             <TextField
-              sx={{ mb: 6, width: "315px" }}
+              sx={{ mb: 6 }}
               required
+              fullWidth
               name="password"
               label="Password"
               type="password"
@@ -74,8 +75,9 @@ export default function SignUp() {
               onChange={(event) => setPassword(event.target.value)}
             />
             <TextField
-              sx={{ mb: 6, width: "315px" }}
+              sx={{ mb: 6 }}
               required
+              fullWidth
               name="phone"
               label="Phone"
               variant="outlined"
