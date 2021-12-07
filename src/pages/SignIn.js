@@ -51,7 +51,7 @@ export default function SignIn() {
       <Header />
       <CentredBox>
         <Card sx={{ maxWidth: 345 }} variant="outlined">
-          <CardHeader sx={{ textAlign: "center" }} title="Sign In Form" />
+          <CardHeader sx={{ textAlign: "center" }} title="Sign In" />
           <CardContent>
             <form onSubmit={handleSubmit}>
               <TextField

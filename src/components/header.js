@@ -16,6 +16,7 @@ import {
   Slide,
 } from "@mui/material";
 import { alpha, styled } from "@mui/system";
+import { useNavigate } from "react-router";
 
 const TextButton = styled(Button)(({ theme }) => ({
   textTransform: "none",
@@ -73,94 +74,84 @@ const Header = ({ slide = false }) => {
   );
 };
 
-const NavBar = ({ handleClose, handleClick, open, anchorEl }) => (
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      position: "fixed",
-      top: "0",
-      zIndex: "100",
-      width: "100%",
-    }}
-    className="header"
-  >
-    <img
-      style={{
-        objectFit: "contain",
-        height: "100px",
-        paddingTop: "20px",
-        paddingLeft: "14px",
-        paddingRight: "14px",
-      }}
-      className="header_icon"
-      src="./img/ssLogo.png"
-      alt="swarm saviour logo with bee"
-    />
-    <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-      <OutlinedInput
-        sx={{ borderRadius: "50px" }}
-        id="outlined-adornment-password"
-        type="text"
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton aria-label="Search" edge="end">
-              <SearchIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-        label="Password"
-      />
-    </FormControl>
-
+const NavBar = ({ handleClose, handleClick, open, anchorEl }) => {
+  const navigate = useNavigate();
+  return (
     <Box
       sx={{
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        width: "20",
-        marginRight: "80px",
+        position: "fixed",
+        top: "0",
+        zIndex: "100",
+        width: "100%",
       }}
-      className="header_right"
+      className="header"
     >
-      <TextButton variant="text">Bee a Swarm Saviour</TextButton>
-      <NavButton aria-label="Language" edge="end">
-        <LanguageIcon />
-      </NavButton>
-      <NavButton
-        id="profile-button"
+      <img
+        style={{
+          objectFit: "contain",
+          height: "100px",
+          paddingTop: "20px",
+          paddingLeft: "14px",
+          paddingRight: "14px",
+          cursor: "pointer",
+        }}
+        className="header_icon"
+        src="./img/ssLogo.png"
+        alt="swarm saviour logo with bee"
+        onClick={() => navigate("/")}
+      />
+
+      <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          width: "76px",
+          width: "20",
+          marginRight: "80px",
         }}
-        aria-label="Language"
-        edge="end"
-        aria-controls="profile-menu"
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+        className="header_right"
       >
-        <MenuIcon />
-        <AccountCircleIcon />
-      </NavButton>
-      <Menu
-        id="profile-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "pofile-button",
-        }}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
+        <TextButton variant="text">Bee a Swarm Saviour</TextButton>
+        <NavButton aria-label="Language" edge="end">
+          <LanguageIcon />
+        </NavButton>
+        <NavButton
+          id="profile-button"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "76px",
+          }}
+          aria-label="Language"
+          edge="end"
+          aria-controls="profile-menu"
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          <MenuIcon />
+          <AccountCircleIcon />
+        </NavButton>
+        <Menu
+          id="profile-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "pofile-button",
+          }}
+        >
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
+      </Box>
     </Box>
-  </Box>
-);
+  );
+};
 
 export default Header;
