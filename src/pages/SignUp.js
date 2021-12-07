@@ -9,6 +9,7 @@ import {
   CardHeader,
   TextField,
   Link,
+  Typography,
 } from "@mui/material";
 import CentredBox from "../components/CentredBox";
 import { Box } from "@mui/system";
@@ -85,19 +86,24 @@ export default function SignUp() {
               onChange={(event) => setPhone(event.target.value)}
             />
             <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Button sx={{ mb: 5 }} variant="contained" type="submit">
+              <Button
+                sx={{ mb: 5, textTransform: "none" }}
+                variant="contained"
+                type="submit"
+              >
                 Sign Up
               </Button>
             </Box>
             <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-              Already have an account?
-              <Link
-                sx={{ ml: 2, textDecoration: "none" }}
+              <Typography variant="body1"> Already have an account?</Typography>
+              <Button
+                sx={{ ml: 2 }}
                 color="secondary"
                 onClick={() => navigate("/signin")}
+                variant="text"
               >
                 Sign In
-              </Link>
+              </Button>
             </CardActions>
           </form>
         </CardContent>
