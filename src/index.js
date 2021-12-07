@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 
-export const SERVER_URL = "http://localhost:4567";
+export const SERVER_URL = "https://swarm-saviour.herokuapp.com/";
 
 ReactDOM.render(
   <React.StrictMode>
