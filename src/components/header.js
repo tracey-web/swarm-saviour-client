@@ -1,20 +1,9 @@
 import React from "react";
 import { Box } from "@mui/system";
-import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  OutlinedInput,
-  MenuItem,
-  Menu,
-  useScrollTrigger,
-  Slide,
-} from "@mui/material";
+import { Button, MenuItem, Menu, useScrollTrigger, Slide } from "@mui/material";
 import { alpha, styled } from "@mui/system";
 import { useNavigate } from "react-router";
 

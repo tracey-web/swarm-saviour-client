@@ -13,37 +13,20 @@ import { CardActions, Link, Typography } from "@mui/material";
 
 import CentredBox from "../components/CentredBox";
 import { Box } from "@mui/system";
+import { signIn } from "../services/userService";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signIn = (user) => {
-    fetch(`${SERVER_URL}/login`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.token) {
-          localStorage.setItem("token", result.token);
-          localStorage.setItem("user", JSON.stringify(result.user));
-          navigate("/");
-        }
-      });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    signIn({ email, password });
+    signIn({ email, password }).then((success) => {
+      if (success) {
+        navigate("/");
+      }
+    });
   };
 
   return (

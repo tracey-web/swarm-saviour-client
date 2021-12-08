@@ -14,6 +14,7 @@ import {
 import CentredBox from "../components/CentredBox";
 import { Box } from "@mui/system";
 import Header from "../components/header";
+import { signUp } from "../services/userService";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,34 +22,13 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
 
-  const signUp = (user) => {
-    fetch(`${SERVER_URL}/users`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          email: user.email,
-          password: user.password,
-          phone: user.phone,
-        },
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.token) {
-          localStorage.setItem("token", result.token);
-          localStorage.setItem("user", JSON.stringify(result.user));
-          navigate("/");
-        }
-      });
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    signUp({ email, password, phone });
+    signUp({ email, password, phone }).then((success) => {
+      if (success) {
+        navigate("/");
+      }
+    });
   };
 
   return (

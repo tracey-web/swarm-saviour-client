@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/header";
 import { useNavigate } from "react-router";
 
@@ -11,18 +11,51 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  IconButton,
   Modal,
   TextField,
   Typography,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
+import { SERVER_URL } from "..";
 
 const Home = () => {
   const [open, setOpen] = React.useState(false);
   const [modalState, setModalState] = React.useState("swarm");
   const toggleOpen = () => setOpen(!open);
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const isSwarm = modalState === "swarm";
+
+  const signIn = (user) => {
+    fetch(`${SERVER_URL}/login`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: user.email,
+        password: user.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.token) {
+          localStorage.setItem("token", result.token);
+          localStorage.setItem("user", JSON.stringify(result.user));
+          navigate("/");
+        }
+      });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    signIn({ email, password });
+  };
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -112,22 +145,72 @@ const Home = () => {
             width: 400,
           }}
         >
-          <CardHeader sx={{ textAlign: "center" }} title="Report a Swarm" />
-          <CardContent>
-            <TextField
-              sx={{ marginBottom: 2 }}
-              fullWidth
-              placeholder="Address"
-            />
-            <TextField
-              fullWidth
-              multiline
-              minRows={3}
-              placeholder="Where is it located on the property?"
-            />
-          </CardContent>
+          <CardHeader
+            avatar={
+              !isSwarm ? (
+                <IconButton onClick={() => setModalState("swarm")}>
+                  <ArrowBackIcon />
+                </IconButton>
+              ) : (
+                <></>
+              )
+            }
+            action={
+              !isSwarm ? (
+                <IconButton onClick={toggleOpen}>
+                  <CloseIcon />
+                </IconButton>
+              ) : (
+                <></>
+              )
+            }
+            sx={{ textAlign: "center" }}
+            title="Report a Swarm"
+          />
+          {isSwarm ? (
+            <CardContent>
+              <TextField
+                sx={{ marginBottom: 2 }}
+                fullWidth
+                placeholder="Address"
+              />
+              <TextField
+                fullWidth
+                multiline
+                minRows={3}
+                placeholder="Where is it located on the property?"
+              />
+            </CardContent>
+          ) : (
+            <CardContent>
+              <TextField
+                sx={{ mb: 3 }}
+                required
+                fullWidth
+                name="email"
+                label="Email"
+                variant="outlined"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <TextField
+                sx={{ mb: 6 }}
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </CardContent>
+          )}
           <CardActions sx={{ padding: 4 }}>
-            <Button variant="contained" fullWidth onClick={toggleOpen}>
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={() => setModalState("user")}
+            >
               Continue
             </Button>
           </CardActions>
