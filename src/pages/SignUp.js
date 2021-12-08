@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { SERVER_URL } from "..";
 import {
   Button,
   Card,
@@ -8,7 +7,6 @@ import {
   CardContent,
   CardHeader,
   TextField,
-  Link,
   Typography,
 } from "@mui/material";
 import CentredBox from "../components/CentredBox";

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { SERVER_URL } from "..";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -9,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Header from "../components/header";
 
 import Button from "@mui/material/Button";
-import { CardActions, Link, Typography } from "@mui/material";
+import { CardActions, Typography } from "@mui/material";
 
 import CentredBox from "../components/CentredBox";
 import { Box } from "@mui/system";

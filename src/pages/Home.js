@@ -6,7 +6,6 @@ import { Box } from "@mui/system";
 import {
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardHeader,
@@ -18,7 +17,6 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
-import { SERVER_URL } from "..";
 
 const Home = () => {
   const [open, setOpen] = React.useState(false);
@@ -30,32 +28,10 @@ const Home = () => {
 
   const isSwarm = modalState === "swarm";
 
-  const signIn = (user) => {
-    fetch(`${SERVER_URL}/login`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: user.email,
-        password: user.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.token) {
-          localStorage.setItem("token", result.token);
-          localStorage.setItem("user", JSON.stringify(result.user));
-          navigate("/");
-        }
-      });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    signIn({ email, password });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   signIn({ email, password });
+  // };
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
