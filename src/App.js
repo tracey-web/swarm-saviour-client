@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Map from "./components/Map";
 
 import "@fontsource/amatic-sc";
 import "@fontsource/poppins";
@@ -53,6 +54,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="map" element={<Map />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
