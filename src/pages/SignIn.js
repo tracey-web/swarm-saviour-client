@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
-import Header from "../components/header";
+import Header from "../components/Header";
 
 import Button from "@mui/material/Button";
 import { CardActions, Typography } from "@mui/material";

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import CentredBox from "../components/CentredBox";
 import { Box } from "@mui/system";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { signUp } from "../services/userService";
 
 export default function SignUp() {
