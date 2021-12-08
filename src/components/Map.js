@@ -5,28 +5,32 @@ import {
   //  Marker,
   //  InfoWindow,
 } from "@react-google-maps/api";
+import { Box } from "@mui/system";
+import mapStyles from "../styles/mapStyles";
 //import { formatRelative } from "date-fns";
-// import usePlacesAutocomplete, {
-//   getGeocode,
-//   getLatLng,
-// } from "use-places-autocomplete";
+
 // import { useAutocomplete } from "@mui/base";
 // import { styled } from "@mui/material/styles";
 
-const libraries = ["places"];
+export const libraries = ["places"];
 
 const mapContainerStyle = {
-  width: "100vw",
+  width: "60vw",
   height: "100vh",
 };
 const center = {
   lat: -42.876,
   lng: 147.396,
 };
+const options = {
+  styles: mapStyles,
+  disableDefaultUI: true,
+  zoomControl: true,
+};
 
-export default function App() {
+export default function Map() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_Key,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries,
   });
 
@@ -34,12 +38,13 @@ export default function App() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <div>
+    <Box sx={{ margin: -1 }}>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={8}
+        zoom={14}
         center={center}
+        options={options}
       ></GoogleMap>
-    </div>
+    </Box>
   );
 }
