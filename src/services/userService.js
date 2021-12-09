@@ -1,5 +1,17 @@
 import { SERVER_URL } from "..";
 
+export const isSignedIn = () => {
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user");
+  return !!token && !!user;
+};
+
+export const getAuthedUser = () => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+  return { token, user };
+};
+
 export const signIn = (user) => {
   return fetch(`${SERVER_URL}/login`, {
     method: "POST",
@@ -47,4 +59,9 @@ export const signUp = (user) => {
       }
       return false;
     });
+};
+
+export const signOut = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };

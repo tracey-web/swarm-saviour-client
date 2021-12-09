@@ -1,22 +1,19 @@
 import React from "react";
 import {
   GoogleMap,
+  Marker,
   useLoadScript,
-  //  Marker,
+
   //  InfoWindow,
 } from "@react-google-maps/api";
-import { Box } from "@mui/system";
-import mapStyles from "../styles/mapStyles";
-//import { formatRelative } from "date-fns";
 
-// import { useAutocomplete } from "@mui/base";
-// import { styled } from "@mui/material/styles";
+import mapStyles from "../styles/mapStyles";
 
 export const libraries = ["places"];
 
 const mapContainerStyle = {
-  width: "60vw",
-  height: "100vh",
+  width: "70vw",
+  height: `${window.innerHeight - 110}px`,
 };
 const center = {
   lat: -42.876,
@@ -28,7 +25,7 @@ const options = {
   zoomControl: true,
 };
 
-export default function Map() {
+export default function Map({ markers, onMapLoad }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
     libraries,
@@ -38,13 +35,20 @@ export default function Map() {
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <Box sx={{ margin: -1 }}>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={14}
-        center={center}
-        options={options}
-      ></GoogleMap>
-    </Box>
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={14}
+      center={center}
+      options={options}
+      onLoad={onMapLoad}
+    >
+      {markers.map((marker) => (
+        <Marker
+          key={marker.id}
+          position={{ lat: marker.lat, lng: marker.long }}
+          icon="./favicon.ico"
+        />
+      ))}
+    </GoogleMap>
   );
 }

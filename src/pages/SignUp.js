@@ -24,7 +24,7 @@ export default function SignUp() {
     event.preventDefault();
     signUp({ email, password, phone }).then((success) => {
       if (success) {
-        navigate("/");
+        navigate("/swarms");
       }
     });
   };

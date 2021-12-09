@@ -4,10 +4,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Map from "./components/Map";
 
 import "@fontsource/amatic-sc";
 import "@fontsource/poppins";
+import SwarmLocator from "./pages/SwarmLocator";
+import { CssBaseline } from "@mui/material";
 
 const theme = createTheme({
   palette: {
@@ -49,12 +50,13 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="map" element={<Map />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/swarms" element={<SwarmLocator />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

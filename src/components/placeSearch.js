@@ -1,111 +1,50 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import React from "react";
+
+import { Box } from "@mui/system";
+import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
-import throttle from "lodash/throttle";
+//import GoogleMaps from "../components/placeSearch";
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
 
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  position.appendChild(script);
-}
-
-const autocompleteService = { current: null };
-
-export default function GoogleMaps({ value, setValue }) {
-  const [inputValue, setInputValue] = React.useState("");
-  const [options, setOptions] = React.useState([]);
-  const loaded = React.useRef(false);
-
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`,
-        document.querySelector("head"),
-        "google-maps"
-      );
-    }
-
-    loaded.current = true;
-  }
-
-  const fetch = React.useMemo(
-    () =>
-      throttle((request, callback) => {
-        autocompleteService.current.getPlacePredictions(request, callback);
-      }, 200),
-    []
-  );
-
-  React.useEffect(() => {
-    let active = true;
-
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current =
-        new window.google.maps.places.AutocompleteService({
-          fields: ["address_component", "geometry"],
-        });
-      //autocompleteService.current.setFields(["address_component", "geometry"]);
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
-
-    if (inputValue === "") {
-      setOptions(value ? [value] : []);
-      return undefined;
-    }
-
-    fetch({ input: inputValue }, (results) => {
-      if (active) {
-        let newOptions = [];
-
-        if (value) {
-          newOptions = [value];
-        }
-
-        if (results) {
-          newOptions = [...newOptions, ...results];
-        }
-
-        setOptions(newOptions);
-      }
-    });
-
-    return () => {
-      active = false;
-    };
-  }, [value, inputValue, fetch]);
-
+const PlaceSearch = ({ locationValue, setLocationValue, setAddress }) => {
+  const {
+    ready,
+    value,
+    suggestions: { data },
+    setValue,
+  } = usePlacesAutocomplete();
   return (
     <Autocomplete
-      id="google-map-demo"
-      //sx={{ width: 300 }}
+      disabled={!ready}
+      filterOptions={(x) => x}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
       }
-      filterOptions={(x) => x}
-      options={options}
+      value={locationValue}
+      options={data}
       autoComplete
       includeInputInList
       filterSelectedOptions
-      value={value}
-      onChange={(event, newValue) => {
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
+      onChange={async (e, address) => {
+        try {
+          const results = await getGeocode({ address: address.description });
+          const { lat, lng } = await getLatLng(results[0]);
+          console.log(lat, lng);
+          setAddress({ address: address.description, lat, long: lng });
+        } catch (error) {
+          console.log("ERROR: ", error);
+        }
+
+        //console.log(address);
+        setLocationValue(address);
       }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
+      inputValue={value}
+      onInputChange={(e, newValue) => {
+        setValue(newValue);
       }}
       renderInput={(params) => (
         <TextField {...params} label="Add a location" fullWidth />
@@ -149,4 +88,5 @@ export default function GoogleMaps({ value, setValue }) {
       }}
     />
   );
-}
+};
+export default PlaceSearch;

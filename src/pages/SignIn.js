@@ -23,7 +23,7 @@ export default function SignIn() {
     event.preventDefault();
     signIn({ email, password }).then((success) => {
       if (success) {
-        navigate("/");
+        navigate("/swarms");
       }
     });
   };
