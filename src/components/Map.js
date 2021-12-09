@@ -46,7 +46,7 @@ export default function Map({ markers, onMapLoad }) {
         <Marker
           key={marker.id}
           position={{ lat: marker.lat, lng: marker.long }}
-          icon="./favicon.ico"
+          icon="./bee-marker.png"
         />
       ))}
     </GoogleMap>
